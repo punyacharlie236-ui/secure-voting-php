@@ -1,39 +1,34 @@
-# 🗳️ Secure Online Voting System (PHP Native & MySQL)
+<div align="center">
 
-A lightweight, responsive, and security-hardened web-based voting application built with Native PHP 8 and MySQL. This project demonstrates backend coding best practices, defensive programming, anti-fraud tracking, and mitigation of common web application vulnerabilities (OWASP Top 10).
+# 🗳️ Secure Online Voting System
+### PHP 8.x • MySQL Security Hardened • Real-Time Architecture
 
----
+[![PHP Version](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![Security](https://img.shields.io/badge/Security-OWASP_Hardened-10B981?style=for-the-badge&logo=auth0&logoColor=white)](#-security-hardening-architecture)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-## ✨ Key Features & Security Implementation
+<p align="center">
+  A lightweight, responsive, and defensive web-based voting application with anti-fraud tracking, parameterized SQL statements, CSRF protection, and asynchronous real-time polling.
+</p>
 
-### 1. 🛡️ Anti-Fraud Mechanism
-* **Session ID & IP Tracking:** Mencegah pemberian suara ganda (*double voting*) dengan memeriksa kombinasi `session_id()` dan `$_SERVER['REMOTE_ADDR']`.
-* **State Verification:** Antarmuka pemilih dinonaktifkan secara otomatis jika identitas sesi/IP terdeteksi telah menggunakan hak suara.
-
-### 2. 🔒 Security Hardening
-* **SQL Injection Prevention:** 100% interaksi database yang dinamis menggunakan Parameterized Prepared Statements (`mysqli_stmt`).
-* **CSRF Mitigation:** Verifikasi token *Cross-Site Request Forgery* berbasis kriptografi acak (`random_bytes(32)`) pada setiap request `POST`.
-* **XSS Defense:** Sanitasi output otomatis menggunakan `htmlspecialchars()` dengan flag `ENT_QUOTES` dan encoding `UTF-8`.
-* **Hardened Session Cookies:** Konfigurasi cookie dengan atribut `HttpOnly`, `SameSite=Lax`, dan `Secure` (jika HTTPS aktif).
-
-### 3. 📊 Real-Time Live Dashboard
-* **AJAX Polling:** Dashboard pemantauan (`hasil.php`) melakukan pembaruan persentase dan grafik progress bar secara asinkron setiap 5 detik via JavaScript Fetch API ke endpoint `get_hasil.php`.
-* **DOM-XSS Safe:** Rendering elemen antarmuka menggunakan manipulasi `textContent` dan sanitasi DOM.
-
-### 4. ⚙️ Protected Admin Panel
-* **Session-Authenticated Dashboard:** Mengelola data kandidat dan pemantauan suara dengan proteksi login admin (`admin.php`).
-* **Safe Mutating Operations:** Tambah kandidat, hapus kandidat (dengan validasi relasi suara), dan reset data (*TRUNCATE*) terproteksi CSRF.
+</div>
 
 ---
 
-## 📁 Project Structure
+## 🏛️ Live Runtime Architecture Map
 
-```text
-├── config.php                # Konfigurasi database, helper CSRF, & sanitasi XSS
-├── database.sql              # Skema tabel MySQL (kandidat & vote)
-├── index.php                 # Halaman utama & form pemilihan suara
-├── proses_vote.php           # Backend handler & validasi integritas vote
-├── hasil.php                 # Dashboard antarmuka grafik hasil live voting
-├── get_hasil.php             # Endpoint REST API JSON untuk agregasi suara
-├── admin.php                 # Panel kontrol administrasi terproteksi
-└── README.md                 # Dokumentasi proyek
+<!-- ARCHIFY ANIMATED RUNTIME MAP -->
+<div align="center">
+  <img src="./assets/architecture.svg" alt="Secure Voting System Architecture Map" width="100%">
+</div>
+
+<br>
+
+| 🛡️ Guided Story: Anti-Fraud | 🔍 Route Probe: Live Stream | 🔬 Security Lens: Admin Gate |
+| :--- | :--- | :--- |
+| **Pencegahan Double Vote**<br>Memverifikasi `session_id()` dan `$_SERVER['REMOTE_ADDR']` untuk memblokir voting berulang sebelum data disimpan ke database. | **Real-Time Agregasi 5s**<br>JavaScript Fetch API melakukan polling asinkron ke `get_hasil.php` tanpa perlu me-reload seluruh halaman browser. | **Proteksi Akses Penuh**<br>Operasi mutasi data (Tambah, Hapus, Truncate) diproteksi autentikasi sesi admin dan verifikasi token CSRF. |
+
+---
+
+## 🔒 Security Hardening Architecture
